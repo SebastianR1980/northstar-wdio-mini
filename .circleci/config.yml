@@ -12,5 +12,17 @@ jobs:
 workflows:
   version: 2
   sanity_pipeline:
-    jobs:
-      - sanity
+    jjobs:
+  sanity:
+    docker:
+      - image: cimg/node:20.11-browsers
+    steps:
+      - checkout
+      - run: npm ci
+      - run: npm run test:sanity
+
+      - store_test_results:
+          path: reports/junit
+
+      - store_artifacts:
+          path: reports/junit
