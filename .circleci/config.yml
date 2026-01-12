@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  sanity:
+    docker:
+      - image: cimg/node:20.11-browsers
+    steps:
+      - checkout
+      - run: npm ci
+      - run: npm run test:sanity
+
+workflows:
+  version: 2
+  sanity_pipeline:
+    jobs:
+      - sanity

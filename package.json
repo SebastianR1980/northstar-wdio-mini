@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "wdio": "wdio run ./wdio.conf.js"
+    "wdio": "wdio run ./wdio.conf.js",
+    "test": "wdio run wdio.conf.js",
+    "test:sanity": "wdio run wdio.conf.js --suite sanity",
+    "test:sanity:ci": "cross-env CI=true wdio run wdio.conf.js --suite sanity"
   },
   "keywords": [],
   "author": "",
