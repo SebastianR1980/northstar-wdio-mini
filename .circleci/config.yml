@@ -6,23 +6,19 @@ jobs:
       - image: cimg/node:20.11-browsers
     steps:
       - checkout
-      - run: npm ci
-      - run: npm run test:sanity
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Run sanity suite
+          command: npm run test:sanity
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
 
 workflows:
   version: 2
   sanity_pipeline:
-    jjobs:
-  sanity:
-    docker:
-      - image: cimg/node:20.11-browsers
-    steps:
-      - checkout
-      - run: npm ci
-      - run: npm run test:sanity
-
-      - store_test_results:
-          path: reports/junit
-
-      - store_artifacts:
-          path: reports/junit
+    jobs:
+      - sanity
