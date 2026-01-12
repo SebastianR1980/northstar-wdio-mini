@@ -6,19 +6,34 @@ jobs:
       - image: cimg/node:20.11-browsers
     steps:
       - checkout
+
       - run:
           name: Install dependencies
           command: npm ci
+
       - run:
           name: Run sanity suite
           command: npm run test:sanity
+
+      - run:
+          name: Debug - locate JUnit XML
+          command: |
+            pwd
+            ls -la
+            ls -la reports || true
+            ls -la reports/junit || true
+            find . -maxdepth 6 -type f -name "*.xml" -print
+
       - store_test_results:
           path: reports/junit
+          when: always
+
       - store_artifacts:
           path: reports/junit
+          destination: junit
+          when: always
 
 workflows:
-  version: 2
   sanity_pipeline:
     jobs:
       - sanity
